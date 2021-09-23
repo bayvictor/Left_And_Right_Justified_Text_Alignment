@@ -347,8 +347,6 @@ if __name__=="__main__":
     page = LR_JustifiedPage(para, 20)
     sys.exit(0)
 
-para = "complicated problem to be\
-solved, so we are adding more text to see that it actually works."
 page = LR_JustifiedPage(para, 21)
 para = open( sys.argv[1], "rt" ).read()
 #page = LR_JustifiedPage(para, int(sys.argv[2]), sys.argv[3] ) 
