@@ -3,9 +3,9 @@
 # quick hack:
 #!/bin/bash -x 
 # step 1. 
-git clone https://github.com/bayvictor/Left_And_Right_Justified_Text_Alignment.git
-cd Left*
-chmod +x *.sh
+git clone https://github.com/bayvictor/Left_And_Right_Justified_Text_Alignment.git;
+cd Left*;
+chmod +x *.sh; 
 # step2. running without command line argument.
 ./noarg.sh           ## script content: python3 left_and_right_justified.py >noarg.sh.log.txt 2>&1 
 echo "above line testing for para=\"This is a sample text but a complicated problem to be solved, so we are adding more text to see that it actually works.\" case."
