@@ -3,8 +3,11 @@ import os
 import string
 import re
 import random
-
+##   this code run in command line (1) without argument will internally test with embedded sample paragraph in below requirements, run "noarg.sh"
+##                              or (2) usage: $0 <txt_filename> <page_size>, reads a text file, and align leftly+rightly text result to stdout. run "debug.sh"
+##   code maintainer: Victor Huang, yahoo emailer id, huangxd. 
 """
+REQUIREMENTS: text alignment, given any plain text, ask you left and right justify it!
     Write a program in Python, that can accept a paragraph string and page
 width as parameters and return an array of left AND right justified
 strings.
@@ -34,7 +37,15 @@ Array [7] = "actually
 works."
 
 """
-
+## algorithm: pass 1. segment all 'pure words', and also their out, so "pure words" as paragraph will be segmented into word list=["Pure", " ", "words"]; 
+##  --        pass 2. loop over all segmented list, pack them into current linked list, until next word will 'over flud' page width (==20, e.g.); which triggers
+##                flushing out of link list, and headly starting next link list,  Calculate vacuum_size = page_max - linklist_footprint.
+##            pass 3. vacuum_size = 0: continue.
+##            pass 4. vacuum_size > linklist item_number, apparently inserting a space following each linklist item will be evenly alignment.
+##            pass 5. vacuum_size < linked list item number, randomly select index, then add spaces in number of vacuum_size to linklist(excluding head & tail.  
+##            pass 6. printing the page out (adding to page_list).
+##            pass 7. when loop of pass2 over, write out all pages (to stdio or filename).
+##  implementation: Using 3 class, LinkedList, Node, 
 class LinkedList:
 
     class Node:
@@ -153,7 +164,7 @@ class LinkedList:
 
         return llen, house_size
 
-"""
+""" sniplet testing linked list and their use cases. 
 if __name__ == "__main__":
     
     linked_list = LinkedList()
@@ -203,45 +214,6 @@ class LR_JustifiedPage:
               break
           print(page_ii+"\n")
 
-  def next_word_punct_ii(self):
-    wp_list = self.word_and_punt_list
-    wp_len = len(wp_list)
-    self.page_list = []
-    cur_linked_list = LinkedList()
-    filled_size = 0
-    self.wp_ii = 0
-    word_ii = ""
-
-    for ii in range(self.wp_ii, self.wp_len):
-      if  filled_size + len(wp_list[ii]) < self.para_size:
-        word_ii =   wp_list[ii]
-        cur_linked_list.append(word_ii)
-        filled_size += len(word_ii)
-      else: # wrap up old page, and head_node current word  
-        ret = wrap_a_page( cur_linked_list, filled_size, self.para_size)
-        del cur_linked_list
-        cur_linked_list = LinkedList()
-        next_head = word_ii
-        cur_linked_list.append(next_head)  # head node it to new ll.
-        cur_linked_list.append(' ')  # head node it to new ll.
-        self.page_list.append( ret )
-        filled_size =  len(next_head)
-        if ii< self.wp_len-1 and (filled_size + len(wp_list[ii+1]) >  self.para_size):
-           ret2 = wrap_a_page( cur_linked_list, filled_size, self.para_size)
-           if ret2 is not None:
-              self.page_list.append( ret2 )
-           del cur_linked_list
-           cur_linked_list = LinkedList()
-           next_head2 = wp_list[ii+1]
-           cur_linked_list.append(next_head2) # head node it to new ll.
-           filled_size =  len(next_head2)
-           ii += 1               
-    ret = wrap_a_page( cur_linked_list, filled_size, self.para_size)
-    if ret is not None:
-      self.page_list.append( ret )
-
-    #self.page_list = page_linkedList
-    # page_linkedList, page
     
 # testing max well justified "grace number", rather than char-numbers /    
 # each 'page' is a linked_list, in this case, word_num
