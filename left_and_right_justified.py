@@ -347,7 +347,7 @@ if __name__=="__main__":
     page = LR_JustifiedPage(para, 20)
     sys.exit(0)
 
-page = LR_JustifiedPage(para, 21)
+#page = LR_JustifiedPage(para, 21)
 para = open( sys.argv[1], "rt" ).read()
 #page = LR_JustifiedPage(para, int(sys.argv[2]), sys.argv[3] ) 
 page = LR_JustifiedPage(para, int(sys.argv[2]) ) 
